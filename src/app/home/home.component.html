@@ -1,0 +1,7 @@
+<div class="symbolRow">
+    <div *ngFor="let symbol of symbols; let i = index">
+        <app-symbol-box [name]="symbol" [index]="i"></app-symbol-box>
+    </div>
+</div>
+<app-order-book></app-order-book>
+

@@ -1,0 +1,18 @@
+.symbol-box {
+    width: 6em;
+    height: 3em;
+    background: #666;
+    border-radius: 3px;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    margin: 1em;
+
+    &:hover {
+        background: #8E2BFF;
+    }
+    
+}
+.active {
+    background: #8E2BFF;
+}
