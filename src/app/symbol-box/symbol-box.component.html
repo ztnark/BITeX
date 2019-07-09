@@ -1,3 +1,4 @@
-<div class="symbol-box" [ngClass]="{'active': active}">
+<div class="symbol-box" [ngClass]="{'active': active}" (click)="onClick()">
     <p>{{name}}</p>
+    <p>{{ticker}}</p>
 </div>

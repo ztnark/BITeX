@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Order } from './domain/order';
-import { OrderService } from './services/orderservice';
+import { DataService } from '../data.service';
 import {interval} from "rxjs/internal/observable/interval";
 import {startWith, switchMap} from "rxjs/operators";
 
@@ -12,9 +12,11 @@ export class OrderBook implements Order {
     selector: 'app-order-book',
     templateUrl: './order-book.component.html',
     styleUrls: ['./order-book.component.css'],
-    providers: [OrderService]
+    providers: [DataService]
 })
 export class OrderBookComponent implements OnInit {
+
+    public asset: string;
 
     displayDialog: boolean;
 
@@ -32,21 +34,25 @@ export class OrderBookComponent implements OnInit {
 
     orderType: string = 'buy';
 
-    constructor(private orderService: OrderService) { }
+    constructor(private dataService: DataService) { }
 
     ngOnInit() {
         interval(1000)
           .pipe(
             startWith(0),
-            switchMap(() => this.orderService.getOrderBook())
+            switchMap(() => this.dataService.getOrderBook())
           )
           .subscribe(orders => this.orders = orders);
+          
+        this.dataService.currentAsset.subscribe(asset => this.asset = asset)
+
         this.cols = [
             { field: 'buyQty', header: 'Buy Qty' },
             { field: 'buyPrice', header: 'Buy Price' },
             { field: 'sellQty', header: 'Sell Qty' },
             { field: 'sellPrice', header: 'Sell Price' }
         ];
+
       }
 
     showDialogToAdd() {

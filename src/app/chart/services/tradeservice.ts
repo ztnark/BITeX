@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Trade } from '../domain/trade';
 
 @Injectable()
 export class TradeService {
@@ -10,7 +9,7 @@ export class TradeService {
     getOrderBook() {
         return this.http.get<any>('http://localhost:3000/history')
             .toPromise()
-            .then(response => <Trade[]> response)
+            .then(response =>  response)
             .then(data => data);
     }
 }

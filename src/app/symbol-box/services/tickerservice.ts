@@ -10,7 +10,7 @@ export class TickerService {
     getTicker(symbol: string) {
         return this.http.get<any>('http://localhost:3000/ticker?symbol=' + symbol)
             .toPromise()
-            .then(response => response.data)
+            .then(response => response)
             .then(data => data);
     }
 }

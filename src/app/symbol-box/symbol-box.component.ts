@@ -1,37 +1,44 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, SimpleChange} from '@angular/core';
 import {interval} from "rxjs/internal/observable/interval";
 import {startWith, switchMap} from "rxjs/operators";
-// import { TickerService } from './services/tickerservice';
-import { Ticker } from './domain/ticker';
+import { DataService } from "../data.service";
 
 
 @Component({
   selector: 'app-symbol-box',
   templateUrl: './symbol-box.component.html',
+  providers: [DataService],
   styleUrls: ['./symbol-box.component.scss']
 })
 export class SymbolBoxComponent implements OnInit {
 
   @Input() name: string;
   @Input() index: number;
+  @Input() asset: string;
 
-  ticker: Ticker;
+  ticker: number;
 
   active = false
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     if( this.index === 0){
       this.active = true
     }
-      // interval(1000)
-      //   .pipe(
-      //     startWith(0),
-      //     switchMap(() => this.tickerService.getTicker(name))
-      //   )
-      //   .subscribe(ticker => this.ticker = ticker);
+      interval(1000)
+        .pipe(
+          startWith(0),
+          switchMap(() => this.dataService.getTicker(this.name))
+        )
+        .subscribe(ticker => this.ticker = ticker.last);
+    
+    this.dataService.currentAsset.subscribe(asset => this.asset = asset)
 
   }
 
+  onClick() {
+    this.active = true
+    this.dataService.changeMessage(this.name)
+  }
 }
