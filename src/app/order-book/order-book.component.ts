@@ -12,7 +12,6 @@ export class OrderBook implements Order {
     selector: 'app-order-book',
     templateUrl: './order-book.component.html',
     styleUrls: ['./order-book.component.css'],
-    providers: [DataService]
 })
 export class OrderBookComponent implements OnInit {
 
@@ -44,7 +43,10 @@ export class OrderBookComponent implements OnInit {
           )
           .subscribe(orders => this.orders = orders);
           
-        this.dataService.currentAsset.subscribe(asset => this.asset = asset)
+        this.dataService.change.subscribe(asset => {
+          this.asset = asset;
+          console.log(asset)
+        });
 
         this.cols = [
             { field: 'buyQty', header: 'Buy Qty' },

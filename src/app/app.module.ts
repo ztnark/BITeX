@@ -20,6 +20,7 @@ import { OrderBookComponent } from './order-book/order-book.component';
 import { ChartComponent } from './chart/chart.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { CategoryService,CandleSeriesService } from '@syncfusion/ej2-angular-charts';
+import { DataService } from './data.service';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { CategoryService,CandleSeriesService } from '@syncfusion/ej2-angular-cha
     MessageModule,
     ChartModule
   ],
-  providers: [CategoryService,CandleSeriesService],
+  providers: [CategoryService,CandleSeriesService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

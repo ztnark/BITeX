@@ -5,9 +5,8 @@ import { DataService } from '../data.service';
 
 @Component({
     selector: 'app-chart',
-    providers: [DataService],
     template:
-    ` <ejs-chart style='display:block;' id='chart-container' [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [title]='title' >
+    ` <ejs-chart style='display:block;' id='chart-container' [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [title]='asset' >
         <e-series-collection>
             <e-series [dataSource]='trades' type='Candle' xName='x' high='high' low='low' open='open' close='close' name='SHIRPUR-G'> </e-series>
         </e-series-collection>
@@ -32,7 +31,9 @@ export class ChartComponent implements OnInit {
             )
             .subscribe(trades => this.trades = trades);
         
-        this.dataService.currentAsset.subscribe(asset => this.asset = asset)
+          this.dataService.change.subscribe(asset => {
+            this.asset = asset;
+          });
 
         this.primaryXAxis = {
             title: 'Date',

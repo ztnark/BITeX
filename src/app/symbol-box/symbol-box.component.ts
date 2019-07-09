@@ -7,14 +7,14 @@ import { DataService } from "../data.service";
 @Component({
   selector: 'app-symbol-box',
   templateUrl: './symbol-box.component.html',
-  providers: [DataService],
   styleUrls: ['./symbol-box.component.scss']
 })
 export class SymbolBoxComponent implements OnInit {
 
   @Input() name: string;
   @Input() index: number;
-  @Input() asset: string;
+
+  asset: string;
 
   ticker: number;
 
@@ -31,14 +31,18 @@ export class SymbolBoxComponent implements OnInit {
           startWith(0),
           switchMap(() => this.dataService.getTicker(this.name))
         )
-        .subscribe(ticker => this.ticker = ticker.last);
-    
-    this.dataService.currentAsset.subscribe(asset => this.asset = asset)
+        .subscribe(ticker => this.ticker = ticker.last)
 
+    this.dataService.change.subscribe(asset => {
+      this.asset = asset;
+      if(asset !== this.name){
+        this.active = false
+      }
+    });
   }
 
   onClick() {
     this.active = true
-    this.dataService.changeMessage(this.name)
+    this.dataService.changeAsset(this.name)
   }
 }
