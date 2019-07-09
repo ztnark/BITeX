@@ -11,37 +11,34 @@ import { DataService } from "../data.service";
 })
 export class SymbolBoxComponent implements OnInit {
 
-  @Input() name: string;
-  @Input() index: number;
+    @Input() name: string;
+    @Input() index: number;
 
-  asset: string;
+    public asset: string;
+    public ticker: number;
+    public active = false;
 
-  ticker: number;
+    constructor(private dataService: DataService) { }
 
-  active = false
-
-  constructor(private dataService: DataService) { }
-
-  ngOnInit() {
-    if( this.index === 0){
-      this.active = true
-    }
-      interval(1000)
+    ngOnInit() {
+        if( this.index === 0){
+            this.active = true
+        }
+        interval(1000)
         .pipe(
-          startWith(0),
-          switchMap(() => this.dataService.getTicker(this.name))
+            startWith(0),
+            switchMap(() => this.dataService.getTicker(this.name))
         )
-        .subscribe(ticker => this.ticker = ticker.last);
-    
-    this.dataService.currentAsset.subscribe(asset =>{ 
-      if(asset !== this.name){ this.active = false}
-      this.asset = asset 
-    })
+        .subscribe(ticker => this.ticker = ticker.last)
 
-  }
+        this.dataService.currentAsset.subscribe(asset =>{ 
+            if(asset !== this.name){ this.active = false}
+            this.asset = asset 
+        })
+    }
 
-  onClick() {
-    this.active = true
-    this.dataService.changeMessage(this.name)
-  }
+    onClick() {
+        this.active = true
+        this.dataService.changeMessage(this.name)
+    }
 }
