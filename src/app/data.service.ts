@@ -17,21 +17,21 @@ export class DataService {
     }
 
     getOrderBook(symbol) {
-        return this.http.get<any>('http://localhost:3000/orderbook?symbol=' + symbol)
+        return this.http.get<any>('https://155.138.229.103/orderbook?symbol=' + symbol)
             .toPromise()
             .then(response => response.data)
             .then(data => data)
     }
 
     getTrades(symbol) {
-        return this.http.get<any>('http://localhost:3000/history?symbol=' + symbol)
+        return this.http.get<any>('https://155.138.229.103/history?symbol=' + symbol)
             .toPromise()
             .then(response =>  response)
             .then(data => data)
     }
 
     getTicker(symbol: string) {
-        return this.http.get<any>('http://localhost:3000/ticker?symbol=' + symbol)
+        return this.http.get<any>('https://155.138.229.103/ticker?symbol=' + symbol)
             .toPromise()
             .then(response => response)
             .then(data => data)
