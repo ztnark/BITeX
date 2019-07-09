@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Order } from '../domain/order';
+import { Ticker } from '../domain/ticker';
 
 @Injectable()
-export class OrderService {
+export class TickerService {
 
     constructor(private http: HttpClient) {}
 
-    getOrderBook() {
-        return this.http.get<any>('http://localhost:3000/')
+    getTicker(symbol: string) {
+        return this.http.get<any>('http://localhost:3000/ticker?symbol=' + symbol)
             .toPromise()
-            .then(response => <Order[]> response.data)
+            .then(response => response.data)
             .then(data => data);
     }
 }

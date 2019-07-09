@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {interval} from "rxjs/internal/observable/interval";
 import {startWith, switchMap} from "rxjs/operators";
-import { TickerService } from './services/tickerservice';
+// import { TickerService } from './services/tickerservice';
 import { Ticker } from './domain/ticker';
 
 
@@ -19,18 +19,18 @@ export class SymbolBoxComponent implements OnInit {
 
   active = false
 
-  constructor(private tickerService: TickerService) { }
+  constructor() { }
 
   ngOnInit() {
     if( this.index === 0){
       this.active = true
     }
-      interval(1000)
-        .pipe(
-          startWith(0),
-          switchMap(() => this.tickerService.getTicker(name))
-        )
-        .subscribe(ticker => this.ticker = ticker);
+      // interval(1000)
+      //   .pipe(
+      //     startWith(0),
+      //     switchMap(() => this.tickerService.getTicker(name))
+      //   )
+      //   .subscribe(ticker => this.ticker = ticker);
 
   }
 

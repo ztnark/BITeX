@@ -18,6 +18,8 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import {MessageModule} from 'primeng/message';
 import { OrderBookComponent } from './order-book/order-book.component';
 import { ChartComponent } from './chart/chart.component';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { CategoryService,CandleSeriesService } from '@syncfusion/ej2-angular-charts';
 
 
 @NgModule({
@@ -41,9 +43,10 @@ import { ChartComponent } from './chart/chart.component';
     DialogModule,
     ButtonModule,
     RadioButtonModule,
-    MessageModule
+    MessageModule,
+    ChartModule
   ],
-  providers: [],
+  providers: [CategoryService,CandleSeriesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
