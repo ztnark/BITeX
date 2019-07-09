@@ -24,23 +24,18 @@ export class ChartComponent implements OnInit {
     constructor(private dataService: DataService) { }
 
     ngOnInit(): void {
+        this.dataService.currentAsset.subscribe(asset =>{ this.asset = asset })
+
         interval(1000)
             .pipe(
               startWith(0),
-              switchMap(() => this.dataService.getTrades())
+              switchMap(() => this.dataService.getTrades(this.asset))
             )
             .subscribe(trades => this.trades = trades);
         
-          this.dataService.change.subscribe(asset => {
-            this.asset = asset;
-          });
 
         this.primaryXAxis = {
-            title: 'Date',
             valueType: 'Category',
-            };
-        this.primaryYAxis = {
-            title: '$'
             };
     }
 }

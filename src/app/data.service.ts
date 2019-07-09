@@ -1,29 +1,30 @@
-import { Injectable, EventEmitter, Output } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
 export class DataService {
 
-  asset = 'BTC/USD';
+  private messageSource = new BehaviorSubject('BTC/USD');
 
-  @Output() change: EventEmitter<string> = new EventEmitter();
+  currentAsset = this.messageSource.asObservable();
 
-  changeAsset(asset) {
-    this.change.emit(asset);
-  }
-  
   constructor(private http: HttpClient) {}
 
-  getOrderBook() {
-    return this.http.get<any>('http://localhost:3000/')
+  changeMessage(message: string) {
+    this.messageSource.next(message)
+  }
+
+  getOrderBook(symbol) {
+    return this.http.get<any>('http://localhost:3000/orderbook?symbol=' + symbol)
       .toPromise()
       .then(response => response.data)
       .then(data => data);
   }
 
-  getTrades() {
-    return this.http.get<any>('http://localhost:3000/history')
+  getTrades(symbol) {
+    return this.http.get<any>('http://localhost:3000/history?symbol=' + symbol)
       .toPromise()
       .then(response =>  response)
       .then(data => data);

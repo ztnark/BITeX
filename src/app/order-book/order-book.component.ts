@@ -36,18 +36,16 @@ export class OrderBookComponent implements OnInit {
     constructor(private dataService: DataService) { }
 
     ngOnInit() {
+
+        this.dataService.currentAsset.subscribe(asset =>{ this.asset = asset })
+
         interval(1000)
           .pipe(
             startWith(0),
-            switchMap(() => this.dataService.getOrderBook())
+            switchMap(() => this.dataService.getOrderBook(this.asset))
           )
           .subscribe(orders => this.orders = orders);
           
-        this.dataService.change.subscribe(asset => {
-          this.asset = asset;
-          console.log(asset)
-        });
-
         this.cols = [
             { field: 'buyQty', header: 'Buy Qty' },
             { field: 'buyPrice', header: 'Buy Price' },

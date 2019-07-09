@@ -31,18 +31,17 @@ export class SymbolBoxComponent implements OnInit {
           startWith(0),
           switchMap(() => this.dataService.getTicker(this.name))
         )
-        .subscribe(ticker => this.ticker = ticker.last)
+        .subscribe(ticker => this.ticker = ticker.last);
+    
+    this.dataService.currentAsset.subscribe(asset =>{ 
+      if(asset !== this.name){ this.active = false}
+      this.asset = asset 
+    })
 
-    this.dataService.change.subscribe(asset => {
-      this.asset = asset;
-      if(asset !== this.name){
-        this.active = false
-      }
-    });
   }
 
   onClick() {
     this.active = true
-    this.dataService.changeAsset(this.name)
+    this.dataService.changeMessage(this.name)
   }
 }
